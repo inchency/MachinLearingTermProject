@@ -1,8 +1,8 @@
 import os, subprocess, time
 
-PACKER_PATH = 'E:\\data\\packing\\upx394w\\upx.exe'
-MAL_PATH = 'E:\\data\\packing\\benign\\exe64'
-OUT_PATH = 'E:\\data\\packing\\un_exe64'
+PACKER_PATH = 'C:\\Users\\jack\\Desktop\\upx394w\\upx.exe'
+MAL_PATH = 'D:\\패킹관련\\패킹\\20171029'
+OUT_PATH = 'D:\\패킹관련\\패킹\\패킹완료'
 
 malfile_list=os.listdir(MAL_PATH)
 for x in malfile_list:
