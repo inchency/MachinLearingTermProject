@@ -5,14 +5,13 @@ import csv
 import pickle
 import time
 
-MAL_PATH = 'E:\\data\\time\\mal'  # 피쳐해쉬 폴더목록
-BENIGN_PATH = 'E:\\data\\time\\benign_train'
-BASE_PATH = 'E:\\data\\time\\model\\'
-START_DAY = 20170727
-END_DAY = 20170830
+MAL_PATH = 'D:\\패킹관련\\패킹\\pack_fh_everything\\trainningSet'
+BENIGN_PATH = 'D:\\패킹관련\\패킹\\nopack_fh_everthing\\trainningSet'
+BASE_PATH = 'D:\\패킹관련\\패킹학습결과\\'
+TODAY = '20180610_trainning'
 
 # for using tensorflow as hyper parameter
-INPUT_SIZE = int(12288)
+INPUT_SIZE = int(512)
 OUTPUT_SIZE = int(2)
 LEARNING_RATE = 1e-4
 BATCH_SIZE = int(256)
@@ -58,7 +57,7 @@ def get_mini_batch(benign_list,mal_list, batch_size):
 
 
 #  KISnet
-def trainANN(benign_list,mal_list,load_model_name,save_model_name):
+def trainANN(benign_list,mal_list,save_model_name):
     tf.gfile.MkDir(save_model_name)
     tf.reset_default_graph()
 
@@ -119,21 +118,12 @@ def trainANN(benign_list,mal_list,load_model_name,save_model_name):
     pass
 
 
-def make_path(start_day,end_day):     # start_day end_day : int
-    date_list = os.listdir(MAL_PATH)
-    date_list.sort()
-    load_model_name = "null"
+def make_path(today):
     benign_list = list()
     benign_list = collect_benign(benign_list, BENIGN_PATH)
     mal_list = list()
-    for d_day in date_list:
-        d_day_int = int(d_day)
-        if d_day_int >= start_day and d_day_int <= end_day:
-            save_model_name = BASE_PATH+str(start_day)+"."+d_day
-            mal_path = os.path.join(MAL_PATH, d_day)  # mal_path C:\\data\\time\\mal\\20170829
-            mal_list = collect_mal(mal_list,mal_path) # mal_list C:\\data\\time\\mal\\20170829\\ff4a3b697310d126e46ebae462d712a1.fh
-            print(mal_list[0],mal_list[-1])
-            print("start :" + d_day)
-            trainANN(benign_list,mal_list,load_model_name,save_model_name)
-            load_model_name = save_model_name
-make_path(START_DAY,END_DAY)
+    mal_list = collect_mal(mal_list, MAL_PATH)
+    save_model_name = os.path.join(BASE_PATH, today)
+    trainANN(benign_list, mal_list, save_model_name)
+
+make_path(TODAY)

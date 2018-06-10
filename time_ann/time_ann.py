@@ -5,14 +5,14 @@ import csv
 import pickle
 import time
 
-MAL_PATH = 'E:\\data\\time\\mal'  # 피쳐해쉬 폴더목록
-BENIGN_PATH = 'E:\\data\\time\\benign_test'
-MODEL_PATH = 'E:\\data\\time\\model8'
-CSV_PATH='E:\\data\\time\\csv'
+MAL_PATH = 'D:\\패킹관련\\패킹\\bops용량큰패킹.fh'  # 피쳐해쉬 폴더목록
+BENIGN_PATH = 'D:\\패킹관련\\패킹\\bops용량작은안패킹.fh'
+MODEL_PATH = 'D:\\패킹관련\\패킹학습결과\\20180610_trainning'
+CSV_PATH='D:\\패킹관련\\CSV결과'
 CSV_FILENAME = ''
 
 # for using tensorflow as hyper parameter
-INPUT_SIZE = int(12288)
+INPUT_SIZE = int(512)
 OUTPUT_SIZE = int(2)
 LEARNING_RATE = 1e-4
 
@@ -21,11 +21,9 @@ def collect_mal(mal_path):
     mal_list = os.listdir(mal_path)
     return mal_list
 
-
 def collect_benign(benign_path):
     benign_list = os.listdir(benign_path)
     return benign_list
-
 
 #  KISnet
 def testANN(modelname,benign_path,mal_path):
@@ -130,7 +128,7 @@ def testANN(modelname,benign_path,mal_path):
 
 
 def make_path():     # start_day end_day : int
-    model_list = os.listdir(MODEL_PATH)
+    model_list = MODEL_PATH
     model_path = list()
     mal_path = list()
     for x in model_list:
@@ -139,6 +137,7 @@ def make_path():     # start_day end_day : int
         if tmp.find('div') > 0:
             tmp = tmp.split('div')[0]
         mal_path.append(os.path.join(MAL_PATH,tmp))
+    print(mal_path)
     for x in range(model_path.__len__()-1):
         print('model :',model_path[x])
         print('mal :',mal_path[x+1])
@@ -148,4 +147,4 @@ def make_path():     # start_day end_day : int
 
 
 
-make_path()
+testANN(MODEL_PATH, BENIGN_PATH, MAL_PATH)
