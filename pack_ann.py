@@ -60,7 +60,7 @@ model.add(Dense(1, activation='sigmoid'))
 adam = kr.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8)
 model.compile(optimizer=adam, loss='binary_crossentropy', metrics=['accuracy'])
 
-hist = model.fit(x_train, y_train, epochs=10, batch_size=1000)
+hist = model.fit(x_train, y_train, epochs=30, batch_size=1000)
 
 fig, loss_ax = plt.subplots()
 
@@ -81,5 +81,6 @@ acc_ax.legend(loc='lower left')
 
 plt.show()
 
-loss_and_metrics = model.evaluate(x_test, y_test, batch_size=32)
+loss_and_metrics = model.evaluate(x_test, y_test, verbose= 0 )
 print('loss_and_metrics : ' + str(loss_and_metrics))
+model.summary()
